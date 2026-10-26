@@ -246,4 +246,3 @@ görünümü (view) hazırladım; kayıtlar teknik olmayan biri için de anlaş�
 
 ---
 
-**Zeynep** · Bilgisayar Mühendisliği · [LinkedIn](https://www.linkedin.com/in/KULLANICI-ADIN) · [E-posta](mailto:E-POSTA-ADRESIN)
