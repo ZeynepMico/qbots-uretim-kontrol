@@ -3,7 +3,7 @@ qbots · Üretim Bilgisi Kontrol Sistemi
 > operatöre mobil bildirimle ulaştıran uçtan uca bir sistem.
 > Zorunlu stajımı yaptığım yazılım şirketi için staj süresince (2026) geliştirdim.
 English summary below · English
-> Bu depo projenin **tanıtım** sayfasıdır. Kaynak kodu staj yaptığım şirkete ait olduğu için paylaşılmamıştır;
+> Bu depo projenin \*\*tanıtım\*\* sayfasıdır. Kaynak kodu staj yaptığım şirkete ait olduğu için paylaşılmamıştır;
 > burada mimari, özellikler, kullanılan teknolojiler ve çözdüğüm teknik problemler anlatılmaktadır.
 ---
 İçindekiler
@@ -13,6 +13,7 @@ Mimari
 Bileşenler
 Öne çıkan teknik çalışmalar
 Teknolojiler
+Ekran görüntüleri
 Geliştirme süreci
 Öğrendiklerim
 ---
@@ -34,22 +35,22 @@ Mobil uygulama (Android)	Operatör	Kendi partilerini görür, parti bitince anl�
 Mimari
 ```mermaid
 flowchart LR
-    subgraph Saha["Saha (her makinenin yanında)"]
-        M["Üretim makinesi<br/>(simülatör)"] --> YDB[("Yerel veritabanı<br/>MariaDB")]
-        OP["Operatör ekranı<br/>(yerel web, kiosk)"] <--> YDB
-        AR["Aracı yazılım<br/>senkronizasyon"] <--> YDB
+    subgraph Saha\["Saha (her makinenin yanında)"]
+        M\["Üretim makinesi<br/>(simülatör)"] --> YDB\[("Yerel veritabanı<br/>MariaDB")]
+        OP\["Operatör ekranı<br/>(yerel web, kiosk)"] <--> YDB
+        AR\["Aracı yazılım<br/>senkronizasyon"] <--> YDB
     end
 
     AR -- "HTTPS + cihaz token'ı" --> API
 
     subgraph Bulut
-        API["REST API"] <--> DB[("MySQL / MariaDB")]
-        CRON["Zamanlanmış görev<br/>(dakikada bir)"] --> DB
+        API\["REST API"] <--> DB\[("MySQL / MariaDB")]
+        CRON\["Zamanlanmış görev<br/>(dakikada bir)"] --> DB
     end
 
-    PANEL["Web yönetim paneli<br/>(Flutter Web)"] -- "HTTPS + JWT" --> API
-    MOB["Mobil uygulama<br/>(Flutter Android)"] -- "HTTPS + JWT" --> API
-    CRON -- "FCM HTTP v1" --> FCM["Firebase Cloud Messaging"]
+    PANEL\["Web yönetim paneli<br/>(Flutter Web)"] -- "HTTPS + JWT" --> API
+    MOB\["Mobil uygulama<br/>(Flutter Android)"] -- "HTTPS + JWT" --> API
+    CRON -- "FCM HTTP v1" --> FCM\["Firebase Cloud Messaging"]
     FCM -- "Partin bitti" --> MOB
 ```
 Akış:
@@ -69,7 +70,7 @@ ikisiyle de çalışır. Eşdeğerliği aynı test senaryolarını iki uygulamay
 → cihaz token'ı. Kurulum kodunun veritabanında yalnızca hash'i tutulur, yeni kod üretilince eskisi geçersiz olur.
 Cihaz token'ı kullanıcı işlemlerinde, kullanıcı token'ı cihaz işlemlerinde kullanılamaz.
 Rol tabanlı yetki: yönetici her şeyi görür; operatör yalnızca kendi partilerini ve kendisine atanmış cihazları.
-Kodlu mesajlar: her hata ve bilgi mesajı bir kod taşır (`kullanici_adi_var` gibi). Böylece istemciler
+Kodlu mesajlar: her hata ve bilgi mesajı bir kod taşır (`kullanici\_adi\_var` gibi). Böylece istemciler
 mesajı kendi seçili dillerinde gösterebilir.
 Sayfalı veri: mobil uygulama açılışta yalnızca günün kayıtlarını, eskileri ise 10'ar 10'ar ister
 (keyset sayfalama). Böylece veri miktarı ve bant genişliği kullanımı sınırlı kalır.
@@ -135,6 +136,21 @@ Saha cihazı	Python, Ubuntu, systemd, MariaDB, kiosk modu
 Güvenlik	JWT, parola ve kurulum kodu hash'leme, rol tabanlı yetki, HTTPS
 Altyapı	Paylaşımlı hosting (cPanel), cron, VirtualBox
 Araçlar	Git / GitHub, Swagger (OpenAPI), phpMyAdmin, Android Studio, draw.io
+Ekran görüntüleri
+> Görüntüler test verileriyle alınmıştır.
+Web yönetim paneli
+Raporlar: sınıflara göre toplam çubuğu ve günlük yığılmış çubuklar (adet ve yüzde)
+![Raporlar](docs/ekran-raporlar.png)
+Kalite kontrol oturumları: seçilen günün oturumları, cihaz cihaz
+![Kalite kontrol oturumları](docs/ekran-oturumlar.png)
+Saha cihazı
+Operatör ekranı: ürün seçimi ve son kontroller
+![Saha cihazı operatör ekranı](docs/ekran-saha.png)
+Mobil uygulama
+Parti bitince gelen bildirim
+<img src="docs/ekran-mobil-bildirim.png" alt="Partin bitti bildirimi" width="420">
+Partilerim (okunmamışlar vurgulu)	Parti ayrıntısı
+<img src="docs/ekran-mobil-partiler.png" alt="Partilerim" width="280">	<img src="docs/ekran-mobil-ayrinti.png" alt="Parti ayrıntısı" width="280">
 Geliştirme süreci
 Gereksinimleri her hafta mentorumla yaptığım toplantılarda netleştirdim; her toplantı için yapılanları,
 test sonuçlarını ve karar bekleyen soruları içeren bir doküman hazırladım.
@@ -164,3 +180,4 @@ Push notifications without an SDK: FCM HTTP v1 implemented in plain PHP (RS256-s
 access token → send), with automatic cleanup of invalid tokens, triggered by a cron job.
 Source code is proprietary and not included; this repository documents the architecture and my contributions.
 ---
+Zeynep · Bilgisayar Mühendisliği · LinkedIn · E-posta
